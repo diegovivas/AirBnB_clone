@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from models.__init__ import storage
+import models
 """
 Base class
 """
@@ -19,12 +19,12 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
-            storage.new(self)
+            models.storage.new(self)
     def __str__(self):
         return '[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__ )
     def save(self):
             self.updated_at = datetime.datetime.now()
-            storage.save()
+            models.storage.save()
     def to_dict(self):
             dictionary = self.__dict__.copy()
             dictionary['class'] = self.__class__.__name__

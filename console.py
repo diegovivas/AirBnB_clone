@@ -2,12 +2,13 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import models
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    classes = ["BaseModel", "State", "City", "Amenity", "Place", "Review"]
+    classes = ["BaseModel", "State", "City", "Amenity", "Place", "Review", "User"]
     def do_EOF(self, line):
         '''EOF to exit the program'''
         return True
@@ -21,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 0:
             print("** class name missing **")
         elif line in self.classes:
-            new_instance = eval(line+"()")
+            new_instance = eval(line + "()")
             new_instance.save()
             print(new_instance.id)
         else:
@@ -57,6 +58,7 @@ class HBNBCommand(cmd.Cmd):
                     new_object = storage.all()
                     if key in new_object:
                         del new_object[key]
+                        storage.save()
                     else:
                         print("** no instance found **")
                 else:
@@ -97,9 +99,9 @@ class HBNBCommand(cmd.Cmd):
                         key = list_key[0] + "." + list_key[1]
                         new_object = storage.all()
                         if key in new_object:
-                           # get_att = getattr(new_object[key], list_key[2], "" )
-                            setattr(new_object[key], str(list_key[2]), list_key[3])
-                            models.storage.save()
+                            get_att = getattr(new_object[key], list_key[2], "")
+                            setattr(new_object[key], str(list_key[2]), list_key[3][1:-1])
+                            new_object[key].save()
                         else:
                             print("** no instance found **")
                     else:

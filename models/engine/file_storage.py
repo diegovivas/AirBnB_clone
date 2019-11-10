@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import json
-import models
+from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage:
 
@@ -23,13 +24,17 @@ class FileStorage:
         with open(self.__file_path, "w") as f:
             f.write(jdic)
     def reload(self):
+        class_list = [BaseModel, User]
         try:
             otro = {}
             otro2 = {}
             with open(self.__file_path, "r") as f:
                 otro = json.load(f)
             for key in otro:
-                a = models.BaseModel(**otro[key])
+                y = otro[key]["__class__"]
+                for idx, item in enumerate(class_list):
+                    if y in str(item):
+                        a = class_list[idx](**otro[key])
                 otro2.setdefault(key, a)
             self.__objects = otro2
         except:

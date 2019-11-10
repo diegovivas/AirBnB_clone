@@ -29,7 +29,8 @@ class FileStorage:
             with open(self.__file_path, "r") as f:
                 otro = json.load(f)
             for key in otro:
-                a = models.BaseModel(otro[key])
+                print("------------------>", type(otro[key]))
+                a = models.BaseModel(**otro[key])
                 otro2.setdefault(key, a)
             self.__objects = otro2
         except:

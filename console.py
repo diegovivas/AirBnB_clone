@@ -3,6 +3,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 import models
 
@@ -86,6 +91,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) is 0:
             print("** class name missing **")
         else:
+            line = line.replace('"', '')
             list_key = line.split()
             if len(list_key) < 2:
                 print("** instance id missing **")
@@ -99,8 +105,12 @@ class HBNBCommand(cmd.Cmd):
                         key = list_key[0] + "." + list_key[1]
                         new_object = storage.all()
                         if key in new_object:
-                            get_att = getattr(new_object[key], list_key[2], "")
-                            setattr(new_object[key], str(list_key[2]), list_key[3][1:-1])
+                            tipo = type(new_object[key])
+                            padre = tipo.__dict__.copy()
+                            if list_key[2] in padre:
+                                tipo2 = type(padre[list_key[2]])
+                                list_key[3] = tipo2(list_key[3])
+                            setattr(new_object[key], list_key[2], list_key[3])
                             new_object[key].save()
                         else:
                             print("** no instance found **")

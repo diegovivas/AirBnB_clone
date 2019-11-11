@@ -116,5 +116,24 @@ class HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
                     else:
                         print("** class doesn't exist·**")
+
+    def default(self, line):
+        num_of_instances = 0
+        list_key = line.split(".")
+        args = "." + list_key[1]
+        if args == '.all()' and list_key[0] in self.classes:
+            self.do_all(list_key[0])
+        elif args == '.count()' and list_key[0] in self.classes:
+            for key in models.storage.all():
+                if list_key[0] in key:
+                    num_of_instances += 1
+            print(num_of_instances)
+        elif 'show' in line:
+            list_arg = line.split('"')
+            self.do_show(list_arg[0][:-6] + ' ' + list_arg[1])
+        elif 'destroy' in line:
+            list_arg = line.split('"')
+            self.do_destroy(list_arg[0][:-9] + ' ' + list_arg[1])
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

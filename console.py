@@ -53,7 +53,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             list_key = line.split()
             if len(list_key) < 2:
-                print("** instance id missing **")
+                if list_key[0] not in self.classes:
+                    print("** class doesn't exist **")
+                else:
+                    print("** instance id missing **")
             else:
                 if list_key[0] in self.classes:
                     key = list_key[0] + "." + list_key[1]

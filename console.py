@@ -80,6 +80,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** instance id missing **")
             else:
+                storage.reload()
                 if list_key[0] in self.classes:
                     key = list_key[0] + "." + list_key[1]
                     new_object = storage.all()

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+"""
 
+"""
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -11,19 +13,25 @@ from models.review import Review
 from models import storage
 import models
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    classes = ["BaseModel", "State", "City", "Amenity", "Place", "Review", "User"]
+    classes = ["BaseModel", "State", "City",
+               "Amenity", "Place", "Review", "User"]
+
     def do_EOF(self, line):
         '''EOF to exit the program'''
         return True
+
     def do_quit(self, line):
         '''exit the application'''
         return True
+
     def emptyline(self):
         '''Doesn't do anything'''
         pass
-    def do_create (self, line):
+
+    def do_create(self, line):
         if len(line) == 0:
             print("** class name missing **")
         elif line in self.classes:
@@ -32,7 +40,8 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
         else:
             print(" ** class doesn't exist **")
-    def do_show (self, line):
+
+    def do_show(self, line):
         if len(line) is 0:
             print("** class name missing **")
         else:
@@ -110,6 +119,11 @@ class HBNBCommand(cmd.Cmd):
                             if list_key[2] in padre:
                                 tipo2 = type(padre[list_key[2]])
                                 list_key[3] = tipo2(list_key[3])
+                            else:
+                                try:
+                                    list_key[3] = eval(list_key[3])
+                                except:
+                                    pass
                             setattr(new_object[key], list_key[2], list_key[3])
                             new_object[key].save()
                         else:
@@ -120,20 +134,61 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         num_of_instances = 0
         list_key = line.split(".")
-        args = "." + list_key[1]
-        if args == '.all()' and list_key[0] in self.classes:
-            self.do_all(list_key[0])
-        elif args == '.count()' and list_key[0] in self.classes:
-            for key in models.storage.all():
-                if list_key[0] in key:
-                    num_of_instances += 1
-            print(num_of_instances)
-        elif 'show' in line:
-            list_arg = line.split('"')
-            self.do_show(list_arg[0][:-6] + ' ' + list_arg[1])
-        elif 'destroy' in line:
-            list_arg = line.split('"')
-            self.do_destroy(list_arg[0][:-9] + ' ' + list_arg[1])
-
+        if len(list_key) > 1:
+            args = "." + list_key[1]
+        list_arg = line.split('"')
+        num_args = len(list_arg)
+        if len(list_key) > 1:
+            if args == '.all()' and list_key[0] in self.classes:
+                self.do_all(list_key[0])
+            elif args == '.count()' and list_key[0] in self.classes:
+                for key in models.storage.all():
+                    if list_key[0] in key:
+                        num_of_instances += 1
+                print(num_of_instances)
+            elif 'show' in line:
+                if len(list_arg) == 1:
+                    print("** instance id missing **")
+                else:
+                    self.do_show(list_arg[0][:-6] + ' ' + list_arg[1])
+            elif 'destroy' in line:
+                if len(list_arg) == 1:
+                    print("** instance id missing **")
+                else:
+                    self.do_destroy(list_arg[0][:-9] + ' ' + list_arg[1])
+            elif 'update' in line:
+                line_dict = line.split("{")
+                if len(line_dict) == 2:
+                    our_dict = "{" + line_dict[1][:-1]
+                    dict_final = eval(our_dict)
+                    command = list_arg[0][:-8] + ' '
+                    command += list_arg[1] + ' '
+                    command_f = command
+                    for key in dict_final:
+                        command += str(key) + ' '
+                        command += str(dict_final[key])
+                        self.do_update(command)
+                        command = command_f
+                else:
+                    if num_args == 1:
+                        print("** instance id missing **")
+                    elif num_args == 2 or num_args == 3:
+                        print("** attribute name missing **")
+                    elif num_args == 4:
+                        print("** value missing **")
+                    elif num_args >= 5:
+                        command = list_arg[0][:-8] + ' '
+                        command += list_arg[1] + ' '
+                        command += list_arg[3] + ' '
+                        try:
+                            command += list_arg[5]
+                        except:
+                            list_arg[4] = list_arg[4][:-1]
+                            command += list_arg[4].replace(",", "")
+                        self.do_update(command)
+            else:
+                print("*** Unknown syntax: {}".format(line))
+        else:
+            print("*** Unknown syntax: {}".format(line))
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -1,7 +1,10 @@
 #!/usr/python3
 from models.base_model import BaseModel
+"""Class inherence from BaseModel"""
+
 
 class Place(BaseModel):
+    """Class for places"""
     city_id = ""
     user_id = ""
     name = ""

@@ -118,7 +118,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
             else:
                 if len(list_key) < 3:
-                    print("** attribute name missing **")
+                    new_object = storage.all()
+                    key = list_key[0] + "." + list_key[1]
+                    if key not in new_object:
+                        print("** no instance found **")
+                    else:
+                        print("** attribute name missing **")
                 elif len(list_key) < 4:
                     print("** value missing **")
                 else:

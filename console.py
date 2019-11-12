@@ -39,18 +39,23 @@ class HBNBCommand(cmd.Cmd):
         '''do_create function create new object '''
         if len(line) == 0:
             print("** class name missing **")
-        elif line in self.classes:
-            new_instance = eval(line + "()")
-            new_instance.save()
-            print(new_instance.id)
         else:
-            print(" ** class doesn't exist **")
+            line = line.replace('"', '')
+            line = line.replace("'", "")
+            if line in self.classes:
+                new_instance = eval(line + "()")
+                new_instance.save()
+                print(new_instance.id)
+            else:
+                print(" ** class doesn't exist **")
 
     def do_show(self, line):
         ''' do_show show selectec object'''
         if len(line) is 0:
             print("** class name missing **")
         else:
+            line = line.replace('"', '')
+            line = line.replace("'", "")
             list_key = line.split()
             if len(list_key) < 2:
                 if list_key[0] not in self.classes:
@@ -73,6 +78,8 @@ class HBNBCommand(cmd.Cmd):
         if len(line) is 0:
             print("** class name missing **")
         else:
+            line = line.replace('"', '')
+            line = line.replace("'", "")
             list_key = line.split()
             if len(list_key) < 2:
                 if list_key[0] not in self.classes:
@@ -101,6 +108,8 @@ class HBNBCommand(cmd.Cmd):
                 list.append(str(obj_dict[key]))
             print(list)
         else:
+            line = line.replace('"', '')
+            line = line.replace("'", "")
             for key in obj_dict:
                 class_split = key.split(".")
                 if class_split[0] == line:

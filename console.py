@@ -98,8 +98,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 0:
             for key in obj_dict:
                 list.append(str(obj_dict[key]))
-            if len(list) != 0:
-                print(list)
+            print(list)
         else:
             for key in obj_dict:
                 class_split = key.split(".")

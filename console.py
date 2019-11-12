@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-
+This module will be the console for manage
+all classes in this project
 """
 import cmd
 from models.base_model import BaseModel
@@ -15,6 +16,9 @@ import models
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    HBNBCommand
+    """
     prompt = '(hbnb) '
     classes = ["BaseModel", "State", "City",
                "Amenity", "Place", "Review", "User"]
@@ -32,6 +36,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
+        '''do_create function create new object '''
         if len(line) == 0:
             print("** class name missing **")
         elif line in self.classes:
@@ -42,6 +47,7 @@ class HBNBCommand(cmd.Cmd):
             print(" ** class doesn't exist **")
 
     def do_show(self, line):
+        ''' do_show show selectec object'''
         if len(line) is 0:
             print("** class name missing **")
         else:
@@ -60,6 +66,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist·**")
 
     def do_destroy(self, line):
+        ''' do_destroy'''
         if len(line) is 0:
             print("** class name missing **")
         else:
@@ -79,6 +86,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist·**")
 
     def do_all(self, line):
+        ''' do_all '''
         obj_dict = storage.all()
         list = []
         if len(line) == 0:
@@ -97,6 +105,7 @@ class HBNBCommand(cmd.Cmd):
                 print(list)
 
     def do_update(self, line):
+        ''' do_update'''
         if len(line) is 0:
             print("** class name missing **")
         else:
@@ -132,6 +141,7 @@ class HBNBCommand(cmd.Cmd):
                         print("** class doesn't exist·**")
 
     def default(self, line):
+        '''default '''
         num_of_instances = 0
         list_key = line.split(".")
         if len(list_key) > 1:

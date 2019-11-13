@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         print("** no instance found **")
                 else:
-                    print("** class doesn't exist·**")
+                    print("** class doesn't exist **")
 
     def do_destroy(self, line):
         ''' do_destroy'''
@@ -83,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         print("** no instance found **")
                 else:
-                    print("** class doesn't exist·**")
+                    print("** class doesn't exist **")
 
     def do_all(self, line):
         ''' do_all '''
@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
                         else:
                             print("** no instance found **")
                     else:
-                        print("** class doesn't exist·**")
+                        print("** class doesn't exist **")
 
     def default(self, line):
         '''default '''

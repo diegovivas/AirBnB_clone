@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
                 new_instance.save()
                 print(new_instance.id)
             else:
-                print(" ** class doesn't exist **")
+                print("** class doesn't exist **")
 
     def do_show(self, line):
         ''' do_show show selectec object'''
@@ -161,7 +161,6 @@ class HBNBCommand(cmd.Cmd):
                             new_object[key].save()
                         else:
                             print("** no instance found **")
-
     def default(self, line):
         '''default '''
         num_of_instances = 0
@@ -222,5 +221,6 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax: {}".format(line))
         else:
             print("*** Unknown syntax: {}".format(line))
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

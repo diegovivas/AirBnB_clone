@@ -111,6 +111,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             line = line.replace('"', '')
             list_key = line.split()
+            if list_key[0] not in self.classes:
+                print("** class doesn't exist **")
+                return
             if len(list_key) < 2:
                 print("** instance id missing **")
             else:
@@ -137,8 +140,6 @@ class HBNBCommand(cmd.Cmd):
                             new_object[key].save()
                         else:
                             print("** no instance found **")
-                    else:
-                        print("** class doesn't exist **")
 
     def default(self, line):
         '''default '''

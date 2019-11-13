@@ -161,6 +161,7 @@ class HBNBCommand(cmd.Cmd):
                             new_object[key].save()
                         else:
                             print("** no instance found **")
+
     def default(self, line):
         '''default '''
         num_of_instances = 0

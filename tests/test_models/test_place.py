@@ -9,6 +9,7 @@ import unittest
 class TestPlace(unittest.TestCase):
     """ Test Place Class """
     my_object = Place()
+    my_class = Place.__dict__
 
     def test_checking_for_docstring(self):
         """Test if all docstring were written"""
@@ -31,6 +32,29 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(hasattr(self.my_object, "latitude"), True)
         self.assertEqual(hasattr(self.my_object, "longitude"), True)
         self.assertEqual(hasattr(self.my_object, "amenity_ids"), True)
+
+    def test_attribute_type(self):
+       t_format = "%Y-%m-%dT%H:%M:%S.%f"
+       my_dict = self.my_object.to_dict()
+       self.assertEqual(self.my_object.__class__.__name__, 'Place')
+       self.assertEqual(type(my_dict['created_at']), str)
+       self.assertEqual(type(my_dict['updated_at']), str)
+       self.assertEqual(my_dict["created_at"],
+                self.my_object.created_at.strftime(t_format))
+       self.assertEqual(my_dict["updated_at"],
+                self.my_object.updated_at.strftime(t_format))
+       self.assertEqual(type(self.my_class['city_id']), str)
+       self.assertEqual(type(self.my_class['user_id']), str)
+       self.assertEqual(type(self.my_class['name']), str)
+       self.assertEqual(type(self.my_class['description']), str)
+       self.assertEqual(type(self.my_class['number_rooms']), int)
+       self.assertEqual(type(self.my_class['number_bathrooms']), int)
+       self.assertEqual(type(self.my_class['max_guest']), int)
+       self.assertEqual(type(self.my_class['price_by_night']), int)
+       self.assertEqual(type(self.my_class['latitude']), float)
+       self.assertEqual(type(self.my_class['longitude']), float)
+       self.assertEqual(type(self.my_class['amenity_ids']), list)
+
 
 if __name__ == '__main__':
     unittest.main()

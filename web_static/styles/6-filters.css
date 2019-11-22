@@ -46,3 +46,34 @@
     left:40px;
     
 }
+.popover {
+    border: 1px solid #DDDDDD;
+    border-radius:4px;
+    display:none;
+    margin:0;
+    background-color:#FAFAFA;
+}
+.locations:hover .popover{
+    margin-top:-20px;
+    display:block;
+}
+.amenities:hover .popover{
+    margin-top:-20px;
+    display:block;
+}
+.popover ul {
+    padding-top:30px;
+    padding-bottom:20px;
+}
+
+.popover h2 {
+    margin-top:0;
+    margin-left:-50px;
+    margin-bottom:2px;
+    font-size:16px;
+}
+.popover li {
+    margin-top:2px;
+    margin-left:-30px;
+    list-style-type:none;
+}
